@@ -1,0 +1,227 @@
+<html>
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<title>公会成员</title>
+
+<script type="text/javascript" src="http://lelefile3.zhenglvyou.com/files/js/fastclick.js"></script>
+
+<link rel="stylesheet" type="text/css" href="http://lelefile3.zhenglvyou.com/files/css/bull.css">
+<link rel="stylesheet" type="text/css" href="http://lelefile3.zhenglvyou.com/files/css/alert.css">
+
+<style type="text/css">
+
+ .buttonLeft2{position: absolute;width:100%;line-height: 3.3vh;height: 3.3vh;font-size: 2.5vh;width: 10vh;right:15vh;bottom:2.5vh;text-align:center;background:url("http://lelefile3.zhenglvyou.com/files/images/common/button1.png");background-size:100%;}
+ .buttonRight2{position: absolute;width:100%;line-height:3.3vh;height: 3.3vh;font-size: 2.5vh;width: 10vh;right:3vh;bottom:2.5vh;text-align: center;background:url("http://lelefile3.zhenglvyou.com/files/images/common/button2.png");background-size:100%;}
+
+.delete{position: fixed;top:0;left:0;width:100%;height: 100%;z-index: 16;}
+
+.delete .box{position: absolute;top:40vw;left:5vw;width:90%;height: 78vw;border-radius:1.5vw;background: #fff;}
+.delete .box .title{text-align: center;line-height: 16vw;font-size: 4.5vw;}
+.delete .box .info{line-height: 10vw;font-size: 4vw;width: 70vw;margin-left: 10vw;margin-top: 4vw;}
+.delete .box .info img{height: 10vw;width:10vw;float: left;}
+.delete .box .info .name{float: left;margin-left: 3vw}
+.delete .box input{margin-left: 10vw;width: 66vw;background: #f0f0f2;border-radius:1.5vw;height: 11vw;margin-top:5vw;padding: 0 2vw;font-size: 4vw;}
+.delete .box .button{margin-left: 25vw;width: 40vw;background: #ff5555;color: #fff;border-radius:1.5vw;height: 11vw;margin-top:10vw;text-align: center;line-height: 11vw;font-size: 3.6vw;}
+.delete .box .note{position: absolute;width: 70vw;left:10vw;color: #ff5555;font-size:3vw;}
+</style>
+<script type="text/javascript">
+
+    window.addEventListener('load', function() {
+        FastClick.attach(document.body);
+    }, false);
+
+    var newNum = "";
+    var per = window.innerWidth / 530;
+    var globalData = {
+        "baseUrl": window.location.origin+"/",
+        "openId": "",
+        "fileUrl": window.location.origin+"/",
+        "imageUrl": window.location.origin+"/",
+        "guideId": "{$user.maccountid}",
+    };
+    var userData = {
+        "accountId": "{$user.id}",
+        "nickname": "{$user.nickname}",
+        "avatar": "{$user.img}",
+        "guideId": "{$user.maccountid}",
+        "isGuideManager":"{$maccountid.id}",
+    };
+    var configData = {
+        "appId": "wxf2f8ebd089a8846a",
+        "timestamp": "1552276055",
+        "nonceStr": "38beebcec85f566ee6a8892ddb5f1a0b",
+        "signature": "1fc5129278ebe950a19601bf04b179b218ac9928",
+    };
+
+    //#291c4d
+</script>
+
+<style type="text/css">
+    .gameItem{position: absolute;background-color: #291c4d;}
+</style>
+
+</head>
+
+<body style="background-color: #0e0226">
+
+    <div id="loading" style="position: fixed;width:100%;height:100%;top:0;left:0;background: #000" >
+        <img src="http://lelefile3.zhenglvyou.com/files/images/common/loading.gif" style="top: 40%;position: absolute;left: 50%;margin-left: -45px;margin-top: -45px;" />
+    </div>
+
+    <div class="main" id="app-main" style="position: relative; width: 100%;margin: 0 auto; background: #0e0226; display: none;">
+        
+        <!-- 提示框 -->
+        <div class="alert" id="valert" v-show="isShowAlert" style="display: none;">
+            <div class="alertBack"></div>
+            <div class="mainPart">
+                <div class="backImg">
+                    <div class="blackImg"></div>
+                </div>
+                <div class="alertText">{{alertText}}</div>              
+                <div v-show="alertType==3">
+                    <div class="buttonLeft" v-on:click="closeAlert">确定</div>
+                    <div class="buttonRight" v-on:click="closeAlert">取消</div>
+                </div>          
+                <div v-show="alertType==7">
+                    <div class="buttonMiddle" v-on:click="closeAlert">确定</div>
+                </div>  
+                <div v-show="alertType==8">
+                </div>          
+            </div>
+        </div>
+        <div class="delete" v-show="isShowDelete">
+            <div class="greyBack"></div> 
+            <div class="box" style="height: 62vw;">
+            <img v-on:click="hideDelete()" src="http://goss.fexteam.com/files/images/center/cancel.png" style="position: absolute; top: -2vh; right: -2vh; width: 4.5vh; height: 4.5vh;"> 
+                <div class="title">备注</div> 
+                    <div style="margin-left: 10vw; font-size: 4vw;">
+                        成员：{{nowName}}
+                    </div> 
+                <div style="margin-top: 6vw; height: 11vw; border-radius: 1.5vw; margin-left: 10vw; width: 70vw;">
+                <div style="position: absolute; height: 11vw; line-height: 11vw; color: black; margin-left: 0vw; font-size: 4vw;">备注：</div> 
+                    <input v-model:value="nowMname" placeholder="" style="position: absolute; background-color: rgb(240, 240, 242); margin-top: 0px; margin-left: 12vw; width: 60vw; height: 11vw; text-align: left;">
+                </div> 
+                <div class="note" style="position: absolute; top: 38vw; display: none;">
+                </div> 
+                <div v-on:click="ensureChangeMname()" class="button" style="position: absolute; top: 45vw; margin-top: 0px; background-color: rgb(109, 125, 212);">修改</div>
+            </div>
+        </div>
+
+
+        
+        <div style="position: absolute;top: 0;left: 0; width: 100%;height: 18vw;">
+            <input v-model="searchText" type="text" name="mname" placeholder="输入玩家名字" style="padding:0 12px 0 12px;position: absolute;top: 4vw;left: 4vw;width: 76vw;height: 10vw;border-radius:  0.5vh 0 0 0.5vh;font-size: 2.5vh;">
+            <div style="position: absolute;top: 3.9vw;left: 80vw;width: 15vw;height: 10.2vw;line-height: 10.2vw;text-align: center;background-color: rgb(46,44,82);color: rgb(129,214,254);border-radius: 0 0.5vh 0.5vh 0;font-size: 2.5vh;" v-on:click="clickSearch">
+                搜索
+            </div>
+        </div>
+
+        <div style="position: absolute;top: 18vw;left: 0;width: 100%;height: 12vw;background-color: #291c4d;font-size: 2.5vh;line-height: 12vw;text-align: left;color: white;">
+            <div style="position: absolute;left: 4vw">
+                公会成员（{{memberCount}}人）
+            </div>
+        </div>
+
+        <div id="memberDiv" v-bind:style="'position: absolute;top: 30.5vw;left: 0;width: 100%;height: ' + (height - 0.31 * width - 100) + 'px;overflow: hidden;'" >
+            <div style="position: relative;">
+                <div v-for="item in members" v-if="item.status!=0" style="position: relative;width: 100%;height: 15vw;line-height: 15vw;background-color: #291c4d;text-align: center;margin-top: 0.3vh;color: white;overflow:hidden;">
+                    <div style="position: absolute;top: 1vw;left: 4vw;" >
+                        <img v-bind:src="item.avatarUrl" style="position: absolute;top: 0;left: 0;margin-left: 0;width: 8vh;height: 8vh;border-radius: 1vh;">
+                    <img v-if="item.pos==1" src="http://goss.fexteam.com/files/images/h5/guanli_05.png" style="position: absolute; top: 0vw; left: -2vw; width: 7vw; height: 7vw;">
+                    <img v-if="item.pos==99" src="http://goss.fexteam.com/files/images/h5/huizhang_03.png" style="position: absolute; top: 0vw; left: -2vw; width: 7vw; height: 7vw;">
+                    </div>
+                    
+                <div style="position: absolute; top: -4vw; width: 100%; left: 23vw; font-size: 11pt; color: white; text-align: left;">
+                        {{item.mname}}
+                </div>
+                <div style="position: absolute; top: -1vw; height: 100%; line-height: 18vw; width: 100%; left: 23vw; font-size: 9pt; color: white; text-align: left;">
+                    昵称：{{item.name}}
+                </div>
+                <div style="position: absolute; top: 5vw; width: 100%; left: 23vw; font-size: 9pt; color: rgb(57, 215, 255); text-align: left;">
+                    ID:{{item.id}}
+                </div>
+
+                <div v-show="userData.isGuideManager&&userData.accountId==item.id&&item.pos!=99" style="position: absolute; right: 4vw; top: 4vw; width: 13vw; height: 8vw; line-height: 8vw; border-radius: 0.5vw; background-color: rgb(112, 127, 206); text-align: center; font-size: 2vh;" v-on:click="changeMname(item)">
+                    备注
+                </div>
+                <div v-show="userData.isGuideManager&&userData.accountId!=item.id&&item.pos!=99" style="position: absolute; right: 20vw; top: 4vw; width: 13vw; height: 8vw; line-height: 8vw; border-radius: 0.5vw; background-color: rgb(112, 127, 206); text-align: center; font-size: 2vh;" v-on:click="changeMname(item)">
+                    备注
+                </div>
+                <div v-show="userData.isGuideManager&&userData.accountId!=item.id&&item.pos!=99" style="position: absolute; right: 4vw; top: 4vw; width: 13vw; height: 8vw; line-height: 8vw; border-radius: 0.5vw; background-color: rgb(245, 209, 104); text-align: center; font-size: 2vh; color: rgb(116, 51, 46);" v-on:click="changeShowSetting(true, item)">
+                    设置
+                </div>
+                </div>
+            </div>
+        </div>
+    <img src="http://lelefile3.zhenglvyou.com/files/images/index/common_back.png" onclick="javascript :history.go(-1);" style="position: fixed; bottom: 0px; width: 100vw; height: 22vw;">
+    
+    <div v-show="isShowSetting" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
+        <div style="position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.498039);"></div> 
+        <div id="manager_sheet" style="position: absolute; bottom: 0px; width: 100vw; height: 50vw; background-color: rgba(0, 0, 0, 0);">
+            <div v-show="appData.nowItem&&appData.nowItem.pos==0&&userData.accountId==userData.guideId" style="position: absolute; bottom: 16vw; width: 90vw; height: 28vw; left: 5vw; background-color: white; border-radius: 2vw;">
+                <div style="position: absolute; top: 16vw; width: 100%; height: 1px; background-color: lightgray;"></div> 
+                <div style="position: absolute; top: 0px; width: 100%; height: 16vw; text-align: center;" v-on:click="setManager(true)">
+                    <div style="position: absolute; width: 100%; line-height: 12vw; text-align: center; color: rgb(62, 126, 215);">
+                        设为管理员
+                    </div> 
+                    <div style="position: absolute; width: 100%; top: 9vw; height: 6vw; line-height: 6vw; text-align: center; color: gray; font-size: 10px;">
+                        管理员具有创建游戏，开房查询，拉人等权限
+                    </div>
+                </div> 
+                <div style="position: absolute; top: 16vw; width: 100%; height: 12vw; line-height: 12vw; text-align: center; color: red;" v-on:click="kickout()">
+                    踢出
+                </div>
+            </div> 
+            <div v-show="appData.nowItem&&appData.nowItem.pos==1&&userData.accountId==userData.guideId" style="position: absolute; bottom: 16vw; width: 90vw; height: 28vw; left: 5vw; background-color: white; border-radius: 2vw; display: none;">
+                <div style="position: absolute; top: 16vw; width: 100%; height: 1px; background-color: lightgray;"></div> 
+                <div style="position: absolute; top: 0px; width: 100%; height: 16vw; text-align: center;" v-on:click="setManager(false)">
+                    <div style="position: absolute; width: 100%; line-height: 12vw; text-align: center; color: red;">
+                        取消管理员
+                    </div> 
+                    <div style="position: absolute; width: 100%; top: 9vw; height: 6vw; line-height: 6vw; text-align: center; color: gray; font-size: 10px;">
+                        管理员具有创建游戏，开房查询，拉人等权限
+                    </div>
+                </div> 
+                <div style="position: absolute; top: 16vw; width: 100%; height: 12vw; line-height: 12vw; text-align: center; color: red;" v-on:click="kickout()">
+                    踢出
+                </div>
+            </div> 
+            <div v-show="appData.nowItem&&appData.nowItem.pos==0&&userData.accountId!=userData.guideId" style="position: absolute; bottom: 16vw; width: 90vw; height: 16vw; left: 5vw; background-color: white; border-radius: 2vw;">
+                <div style="position: absolute; top: 16vw; width: 100%; height: 1px; background-color: lightgray;"></div> 
+                <div style="position: absolute; top: 0vw; width: 100%; height: 12vw; line-height: 12vw; text-align: center; color: red;" v-on:click="kickout()">
+                    踢出
+                </div>
+            </div> 
+            <div v-show="appData.nowItem&&appData.nowItem.pos==1&&userData.accountId!=userData.guideId" style="position: absolute; bottom: 16vw; width: 90vw; height: 16vw; left: 5vw; background-color: white; border-radius: 2vw; display: none;">
+                <div style="position: absolute; top: 16vw; width: 100%; height: 1px; background-color: lightgray;"></div> 
+                <div style="position: absolute; top: 0vw; width: 100%; height: 12vw; line-height: 12vw; text-align: center; color: red;" v-on:click="kickout()">
+                    踢出
+                </div>
+            </div> 
+            <div style="position: absolute; bottom: 2vw; width: 90vw; height: 12vw; line-height: 12vw; left: 5vw; background-color: white; border-radius: 2vw; text-align: center; color: rgb(62, 126, 215);" v-on:click="changeShowSetting(false, null)">
+                取消
+            </div>
+            <div id="moretext" style="position: relative;background-color: white;color: black;height: 10vw;text-align: center;line-height: 10vw;font-size: 2.2vh;display: none;" >
+                    上拉加载更多
+                </div>
+        </div>
+    </div>
+
+
+    </div>
+
+</body>
+
+<script type="text/javascript" src="http://lelefile3.zhenglvyou.com/files/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://lelefile3.zhenglvyou.com/files/js/bscroll.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" ></script>
+<script type="text/javascript" src="http://lelefile3.zhenglvyou.com/files/js/vue.min.js" ></script>
+<script type="text/javascript" src="http://lelefile3.zhenglvyou.com/files/js/vue-resource.min.js" ></script>
+<script type="text/javascript" src="/files/js/groupmember-2-18.js"></script>
+
+<!-- script type="text/javascript" src="http://lelefile3.zhenglvyou.com/files/js/guild/unionmember/unionmember-1.0.2.min.js"></script ->
+
+</html>

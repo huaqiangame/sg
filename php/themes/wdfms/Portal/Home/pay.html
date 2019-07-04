@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="nofollow" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>房卡充值</title>
+    <link rel="stylesheet" href='https://bf2016.laiyouxi.com/Pay/css/weui.min.css'/>
+    <link rel="stylesheet" href='https://bf2016.laiyouxi.com/Pay/css/cff8ac2fc05a3d176258ac8c6040f3e6.css'/>
+</head>
+<body ontouchstart>
+<div id="error-display" class="weui-toptips weui-toptips_warn js_tooltips">错误提示</div>
+<div class="container" id="container">
+    <!--loading弹框-->
+    <div id="loadingToast" style="display:none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">loading</p>
+        </div>
+    </div>
+    <!--弹窗-->
+    <div id="dialogue" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
+            <div id="dialogue-content" class="weui-dialog__bd"></div>
+            <div class="weui-dialog__ft">
+                <a id="dialogue-ok" href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+        </div>
+    </div>
+    <!--header-->
+    <div class="header page">
+        <p>房卡充值</p>
+    </div>
+    <!---主体内容部分-->
+    <div class="content page">
+        <div class="userinfo">
+            <p class="item">
+                <span class="item-name">昵称 :</span>
+                <span id="nick" class="item-content">{$user.nickname}</span>
+            </p>
+            <p class="item">
+                <span class="item-name">游戏 :</span>
+                <span id="gname" class="item-content">{$titlexx}大厅</span>
+            </p>
+            <p style="width:60%;" class="item">
+                <span class="item-name">房卡 :</span>
+                <span id="code-desc" class="item-content">{$user.fk}张</span>
+            </p>
+            <p class="avatar">
+                <span class="item-name">头像 :</span>
+                <img style="display;" id="avatar" src="{$user.img}">
+            </p>
+        </div>
+        <div class="uid-input">
+            <div id="how-to-find-uid">
+                <img src="http://t.cn/EMeny2q">
+            </div>
+            <div class="question">
+                <img src="https://bf2016.laiyouxi.com/Pay/images/question_icon.png">
+            </div>
+            <form id="submit" action>
+                <input autocomplete="off" type="number" name="uid" readonly="readonly" value="{$user.id}" />
+            </form>
+        </div>
+        <div class="weui-cells_radio pay-select">
+            <label for="coin6">
+                    <div class="charge_money">
+                        <span style="height:100%;display:inline-block;vertical-align:middle"></span>
+                        <img style="vertical-align:middle" src="/themes/wdfms/Public/img/activity/rc_icon_sendredpackage.png">
+                        <p class="diamond-num">6</p>
+                        <p class="pay-val">
+                            <span>6元</span>
+                        </p>
+                        <input type="radio" class="weui-check" name="radio" value="6" id="coin6">
+                    </div>
+                </label><label for="coin18">
+                    <div class="charge_money">
+                        <span style="height:100%;display:inline-block;vertical-align:middle"></span>
+                        <img style="vertical-align:middle" src="/themes/wdfms/Public/img/activity/rc_icon_sendredpackage.png">
+                        <p class="diamond-num">18</p>
+                        <p class="pay-val">
+                            <span>18元</span>
+                        </p>
+                        <input type="radio" class="weui-check" name="radio" value="18" id="coin18">
+                    </div>
+                </label><label for="coin30">
+                    <div class="charge_money">
+                        <span style="height:100%;display:inline-block;vertical-align:middle"></span>
+                        <img style="vertical-align:middle" src="/themes/wdfms/Public/img/activity/rc_icon_sendredpackage.png">
+                        <p class="diamond-num">30</p>
+                        <p class="pay-val">
+                            <span>30元</span>
+                        </p>
+                        <input type="radio" class="weui-check" name="radio" value="30" id="coin30">
+                    </div>
+                </label><label for="coin68">
+                    <div class="charge_money">
+                        <span style="height:100%;display:inline-block;vertical-align:middle"></span>
+                        <img style="vertical-align:middle" src="/themes/wdfms/Public/img/activity/rc_icon_sendredpackage.png">
+                        <p class="diamond-num">68</p>
+                        <p class="pay-val">
+                            <span>68元</span>
+                        </p>
+                        <input type="radio" class="weui-check" name="radio" value="68" id="coin68">
+                    </div>
+                </label><label for="coin128">
+                    <div class="charge_money">
+                        <span style="height:100%;display:inline-block;vertical-align:middle"></span>
+                        <img style="vertical-align:middle" src="/themes/wdfms/Public/img/activity/rc_icon_sendredpackage.png">
+                        <p class="diamond-num">128</p>
+                        <p class="pay-val">
+                            <span>128元</span>
+                        </p>
+                        <input type="radio" class="weui-check" name="radio" value="128" id="coin128">
+                    </div>
+                </label><label for="coin328">
+                    <div class="charge_money">
+                        <span style="height:100%;display:inline-block;vertical-align:middle"></span>
+                        <img style="vertical-align:middle" src="/themes/wdfms/Public/img/activity/rc_icon_sendredpackage.png">
+                        <p class="diamond-num">328</p>
+                        <p class="pay-val">
+                            <span>328元</span>
+                        </p>
+                        <input type="radio" class="weui-check" name="radio" value="328" id="coin328">
+                    </div>
+                </label>        </div>
+        <p class="goods-info">
+            您将支付
+            <span id="paymoney" class="emphasize">0</span>
+            元，获得
+            <span id="diamond-num" class="emphasize">0</span>
+            张房卡<!--(
+            <span id="send-desc">0送0</span>
+            )-->
+        </p>
+    </div>
+    <!--支付按钮-->
+    <div class="paytype page">
+        <a id ="wechat" href="javascript:;" class="weui-btn weui-btn_primary wechat">微信支付</a>
+        <a id ="go" onclick="javascript :history.go(-1);" class="weui-btn weui-btn_primary alipay">返回</a>
+    </div>
+    <input type="hidden" name="openid" value="">
+    <!--二维码显示区域-->
+    <div class="md-modal md-effect-1" id="modal">
+        <div class="md-content">
+            <h3 id="goods-name"></h3>
+            <div>
+                <div id="qrcode">
+                    <div id="qrcode-here"></div>
+                    <img style="width:20%;" class="qrcode-icon" src="https://bf2016.laiyouxi.com/Pay/images/default_avatar.jpg">
+                </div>
+                <button class="md-close">关闭</button>
+            </div>
+        </div>
+    </div>
+    <!--footer-->
+    <div class="weui-footer footer">
+        <p class="weui-footer__text">客服电话\QQ：<a href="tel:4000051827">400-005-1827</a></p>
+        <p class="weui-footer__text">ICP:鄂B2-20120057-2 | 互联网文化经营单位</p>
+        <p class="weui-footer__text">[2017]8934-199号 武汉卓讯互动 版权所有</p>
+    </div>
+    <!--弹出层-->
+    <div id="grayFloor"></div>
+    <!--个人信息标题-->
+    <p class="user-info_title">账号信息核实</p>
+</div>
+<script type="text/javascript" src="https://bf2016.laiyouxi.com/WeChat/js/zepto.min.js"></script>
+<script type="text/javascript" src="https://bf2016.laiyouxi.com/Pay/js/qrcode.min.js"></script>
+<script type="text/javascript" src="/pay/09019006ead8d509b4e790ec7dc16c.js"></script>
+</body>
+</html>
